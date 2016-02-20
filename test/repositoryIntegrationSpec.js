@@ -12,11 +12,15 @@ class MongoRepository {
     let ObjectId = new mongo.ObjectID(id);
     mongo.connect(this._connection, (err, db) => {
         db.collection('posts').findOne({"_id": ObjectId}, (err, post) => {
-          callback({
-            'title': post.title,
-            'content': post.content,
-            'author': post.author
-          });
+          if (!post) {
+            callback({});
+          } else {
+            callback({
+              'title': post.title,
+              'content': post.content,
+              'author': post.author
+            });
+        }
         });
       });
     }
@@ -33,6 +37,15 @@ describe('post repository should', () => {
     };
     repository.getPost(postId, (post) => {
       post.should.be.deep.equal(postDTO);
+      done();
+    });
+  });
+
+  it('return an error when an id doesnt exist on the repository', (done) => {
+    let repository = new MongoRepository("mongodb://localhost:12345/blog");
+    let notExistingId = '49d8d54262a98d965a285f00';
+    repository.getPost(notExistingId, (post) => {
+      post.should.be.deep.equal({});
       done();
     });
   });
