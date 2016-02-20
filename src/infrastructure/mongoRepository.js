@@ -9,9 +9,11 @@ class MongoRepository {
 
   getPost(id, callback) {
     let ObjectId = new mongo.ObjectID(id);
-    mongo.connect(this._connection, (err, db) => {
-        db.collection('posts').findOne({"_id": ObjectId}, (err, post) => {
-          callback(this._exportPost(post));
+    return new Promise((resolve, reject) => {
+      mongo.connect(this._connection, (err, db) => {
+          db.collection('posts').findOne({"_id": ObjectId}, (err, post) => {
+            resolve(this._exportPost(post));
+          });
         });
       });
     }
