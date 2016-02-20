@@ -13,6 +13,16 @@ class GetAllPostsAction {
   }
 }
 
+class GetPostAction {
+  constructor(repository) {
+    this._repository = repository;
+  }
+
+  execute(id) {
+    return this._repository.getPost(id);
+  }
+}
+
 describe('getAllPostAction should return', () => {
   it('a list with all the posts available', () => {
 
@@ -24,3 +34,15 @@ describe('getAllPostAction should return', () => {
     sinon.assert.calledOnce(getAllPosts);
   });
 });
+
+describe('getSinglePost should return', () => {
+  it('a post given an specific id', () => {
+
+    let getPost = sinon.spy();
+    let postRepository = {getPost : getPost}
+
+    let action = new GetPostAction(postRepository);
+    action.execute('anyId');
+    sinon.assert.calledWith(getPost, 'anyId');
+  })
+})
