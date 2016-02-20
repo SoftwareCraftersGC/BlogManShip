@@ -3,35 +3,9 @@
 let should = require('chai').should();
 let sinon = require('sinon');
 
-class GetAllPostsAction {
-  constructor(repository) {
-    this._repository = repository;
-  }
-
-  execute() {
-    return this._repository.getAllPosts();
-  }
-}
-
-class GetPostAction {
-  constructor(repository) {
-    this._repository = repository;
-  }
-
-  execute(id) {
-    return this._repository.getPost(id);
-  }
-}
-
-class CreatePostAction {
-  constructor(service) {
-    this._service = service;
-  }
-
-  execute(postDTO) {
-    return this._service.createPost(postDTO);
-  }
-}
+let GetAllPostsAction = require('../src/actions/getallpostsaction');
+let CreatePostAction = require('../src/actions/createpostaction');
+let GetPostAction = require('../src/actions/getpostaction');
 
 describe('getAllPostAction should return', () => {
   it('a list with all the posts available', () => {
