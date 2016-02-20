@@ -4,12 +4,12 @@ let should = require('chai').should();
 let sinon = require('sinon');
 
 class GetAllPostsAction {
-  constructor(service) {
-    this._service = service;
+  constructor(repository) {
+    this._repository = repository;
   }
 
   execute() {
-    return this._service.getAllPosts();
+    return this._repository.getAllPosts();
   }
 }
 
