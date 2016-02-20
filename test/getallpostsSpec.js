@@ -14,12 +14,12 @@ class GetAllPostsAction {
 }
 
 describe('getAllPostAction should return', () => {
-  it('a list with all the posts avaiable', () => {
+  it('a list with all the posts available', () => {
 
     let getAllPosts = sinon.spy();
-    let postService = {getAllPosts : getAllPosts};
+    let postRepository = {getAllPosts : getAllPosts};
 
-    let action = new GetAllPostsAction(postService);
+    let action = new GetAllPostsAction(postRepository);
     action.execute();
     sinon.assert.calledOnce(getAllPosts);
   });
