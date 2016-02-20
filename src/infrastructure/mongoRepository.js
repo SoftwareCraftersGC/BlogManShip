@@ -7,7 +7,7 @@ class MongoRepository {
     this._connection = connection;
   }
 
-  getPost(id, callback) {
+  getPost(id) {
     let ObjectId = new mongo.ObjectID(id);
     return new Promise((resolve, reject) => {
       mongo.connect(this._connection, (err, db) => {
