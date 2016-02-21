@@ -23,13 +23,13 @@ describe('getSinglePost should return', () => {
   it('a post given an specific id', () => {
 
     let getPost = sinon.spy();
-    let postRepository = {getPost : getPost}
+    let postRepository = {getPost : getPost};
 
     let action = new GetPostAction(postRepository);
     action.execute('anyId');
     sinon.assert.calledWith(getPost, 'anyId');
-  })
-})
+  });
+});
 
 describe('createPost should', () => {
   it('call postService.createPost', () => {
@@ -45,5 +45,5 @@ describe('createPost should', () => {
     };
     action.execute(postDTO);
     sinon.assert.calledOnce(createPost);
-  })
-})
+  });
+});
