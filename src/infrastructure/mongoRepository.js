@@ -7,12 +7,14 @@ class MongoRepository {
     this._connection = connection;
   }
 
-  getAllPosts(callback) {
-    mongo.connect(this._connection, (err, db) => {
-      db.collection('posts').find((err, cursor) => {
-        cursor.toArray((err, posts) => {
-          db.close();
-          callback(posts);
+  getAllPosts() {
+    return new Promise((resolve, reject) => {
+      mongo.connect(this._connection, (err, db) => {
+        db.collection('posts').find((err, cursor) => {
+          cursor.toArray((err, posts) => {
+            db.close();
+            resolve(posts);
+          });
         });
       });
     });

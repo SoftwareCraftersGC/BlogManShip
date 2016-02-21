@@ -9,6 +9,15 @@ describe('post repository', () => {
   const fakeMongoUrl = 'mongodb://localhost:12345/blog';
   const repository = new MongoRepository(fakeMongoUrl);
 
+  afterEach((done) => {
+    mongo.connect(fakeMongoUrl, (err, db) => {
+      db.collection('posts').drop(() => {
+        db.close();
+        done();
+      });
+    });
+  });
+
   describe('get Post ', () => {
     const postId = '56c8d54262a98d965a285f00';
     const postDTO = {
@@ -63,19 +72,10 @@ describe('post repository', () => {
     });
 
     it('should return the list of posts in the repository', (done) => {
-      repository.getAllPosts((posts) => {
+      repository.getAllPosts().then((posts) => {
         posts.length.should.be.equal(3);
         done();
       });
-    });
-  });
-
-  afterEach((done) => {
-    mongo.connect(fakeMongoUrl, (err, db) => {
-        db.collection('posts').drop(() => {
-          db.close();
-          done();
-        });
     });
   });
 });
