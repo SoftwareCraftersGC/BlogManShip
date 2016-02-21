@@ -6,16 +6,16 @@ let mongo = require('mongodb');
 let MongoRepository = require('../src/infrastructure/mongoRepository');
 
 describe('post repository', () => {
-  describe('get post', () => {
-    const fakeMongoUrl = 'mongodb://localhost:12345/blog';
+  const fakeMongoUrl = 'mongodb://localhost:12345/blog';
+  const repository = new MongoRepository(fakeMongoUrl);
+
+  describe('get Post ', () => {
     const postId = '56c8d54262a98d965a285f00';
     const postDTO = {
       'title' : 'Foo Bar Title',
       'content' : 'Foo Bar Content',
       'author' : 'Foo Bar Author'
     };
-
-    let repository;
 
     before((done) => {
       mongo.connect(fakeMongoUrl, (err, db) => {
@@ -31,23 +31,10 @@ describe('post repository', () => {
       });
     });
 
-    after((done) => {
-      mongo.connect(fakeMongoUrl, (err, db) => {
-          db.collection('posts').remove({'_id' : postId}, () => {
-            db.close();
-            done();
-          });
-      });
-    });
-
-    beforeEach(() => {
-      repository = new MongoRepository(fakeMongoUrl);
-    })
-
     it('should return a specific post when it exists on the repository', (done) => {
       repository.getPost(postId).then((post) => {
-          post.should.be.deep.equal(postDTO)
-          done();
+        post.should.be.deep.equal(postDTO);
+        done();
       });
     });
 
@@ -60,4 +47,35 @@ describe('post repository', () => {
     });
   });
 
+  describe('get All Posts', () => {
+
+    before((done) => {
+      mongo.connect(fakeMongoUrl, (err, db) => {
+          db.collection('posts').insert([
+            {'title' : 'post 1'},
+            {'title' : 'post 2'},
+            {'title' : 'post 3'}
+          ], () => {
+            db.close();
+            done();
+          });
+      });
+    });
+
+    it('should return the list of posts in the repository', (done) => {
+      repository.getAllPosts((posts) => {
+        posts.length.should.be.equal(3);
+        done();
+      });
+    });
+  });
+
+  afterEach((done) => {
+    mongo.connect(fakeMongoUrl, (err, db) => {
+        db.collection('posts').drop(() => {
+          db.close();
+          done();
+        });
+    });
+  });
 });

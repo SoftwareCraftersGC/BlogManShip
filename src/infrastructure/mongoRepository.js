@@ -7,28 +7,39 @@ class MongoRepository {
     this._connection = connection;
   }
 
+  getAllPosts(callback) {
+    mongo.connect(this._connection, (err, db) => {
+      db.collection('posts').find((err, cursor) => {
+        cursor.toArray((err, posts) => {
+          db.close();
+          callback(posts);
+        });
+      });
+    });
+  }
+
   getPost(id) {
     let ObjectId = new mongo.ObjectID(id);
     return new Promise((resolve, reject) => {
       mongo.connect(this._connection, (err, db) => {
-          db.collection('posts').findOne({"_id": ObjectId}, (err, post) => {
-            db.close();
-            resolve(this._exportPost(post));
-          });
+        db.collection('posts').findOne({"_id": ObjectId}, (err, post) => {
+          db.close();
+          resolve(this._exportPost(post));
         });
       });
-    }
+    });
+  }
 
-    _exportPost (post) {
-      if (!post) {
-        return {};
-      }
-      return {
-        'title': post.title,
-        'content': post.content,
-        'author': post.author
-      }
+  _exportPost (post) {
+    if (!post) {
+      return {};
     }
+    return {
+      'title': post.title,
+      'content': post.content,
+      'author': post.author
+    }
+  }
 }
 
 module.exports = MongoRepository;
