@@ -7,11 +7,13 @@ class MongoRepository {
     this._connection = connection;
   }
 
-  createPost(post, callback) {
-    mongo.connect(this._connection, (err, db) => {
-      db.collection('posts').insert(post, () => {
-        db.close();
-        callback();
+  createPost(post) {
+    return new Promise((resolve, reject) => {
+      mongo.connect(this._connection, (err, db) => {
+        db.collection('posts').insert(post, () => {
+          db.close();
+          resolve();
+        });
       });
     });
   }

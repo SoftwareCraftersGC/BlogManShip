@@ -81,13 +81,14 @@ describe('post repository', () => {
 
   describe('create Post', () => {
 
+    const post  = {
+      title: 'Foo Bar Title',
+      content: 'Foo Bar Content',
+      author: 'Foo Bar Author'
+    };
+
     it('should create a post into the repository', (done) => {
-      let post = {
-        title: 'Foo Bar Title',
-        content: 'Foo Bar Content',
-        author: 'Foo Bar Author'
-      };
-    let callback = () => {
+      repository.createPost(post).then(() => {
         mongo.connect(fakeMongoUrl, (err, db) => {
           db.collection('posts').findOne((err, postDTO) => {
             db.close();
@@ -95,10 +96,9 @@ describe('post repository', () => {
             done();
           });
         });
-      }
-      repository.createPost(post, callback);
-
-
+      });
     });
+
+    
   });
 });
