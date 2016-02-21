@@ -12,6 +12,7 @@ class MongoRepository {
     return new Promise((resolve, reject) => {
       mongo.connect(this._connection, (err, db) => {
           db.collection('posts').findOne({"_id": ObjectId}, (err, post) => {
+            db.close();
             resolve(this._exportPost(post));
           });
         });

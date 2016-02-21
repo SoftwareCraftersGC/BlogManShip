@@ -20,19 +20,25 @@ describe('post repository', () => {
     before((done) => {
       mongo.connect(fakeMongoUrl, (err, db) => {
           db.collection('posts').insert({
-            '_id' : postId,
+            '_id' : new mongo.ObjectID(postId),
             'title' : postDTO.title,
             'content' : postDTO.content,
             'author' : postDTO.author
-          }, done);
+          }, () => {
+            db.close();
+            done();
+          });
       });
     });
 
     after((done) => {
       mongo.connect(fakeMongoUrl, (err, db) => {
-          db.collection('posts').remove({'_id' : postId}, done);
+          db.collection('posts').remove({'_id' : postId}, () => {
+            db.close();
+            done();
+          });
       });
-    })
+    });
 
     beforeEach(() => {
       repository = new MongoRepository(fakeMongoUrl);
