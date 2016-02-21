@@ -14,3 +14,5 @@ gulp.task('lint', () => {
 gulp.task('test', ['lint'], () => {
   return gulp.src(['test/*.js'], {read: false}).pipe(mocha({reporter: 'spec'}));
 });
+
+gulp.task('test-watch', ['test'], () => gulp.watch('**/*.js', ['test']));
