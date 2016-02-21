@@ -1,6 +1,5 @@
 'use strict';
 
-let should = require('chai').should();
 let sinon = require('sinon');
 
 let GetAllPostsAction = require('../src/actions/getallpostsaction');
@@ -41,7 +40,7 @@ describe('createPost should', () => {
     let postDTO = {
       'title' : 'Foo Bar Title',
       'content' : 'Foo Bar Content',
-      'author' : 'Foo Bar Author',
+      'author' : 'Foo Bar Author'
     };
     action.execute(postDTO);
     sinon.assert.calledOnce(createPost);
