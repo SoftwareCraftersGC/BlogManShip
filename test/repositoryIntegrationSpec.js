@@ -78,4 +78,27 @@ describe('post repository', () => {
       });
     });
   });
+
+  describe('create Post', () => {
+
+    it('should create a post into the repository', (done) => {
+      let post = {
+        title: 'Foo Bar Title',
+        content: 'Foo Bar Content',
+        author: 'Foo Bar Author'
+      };
+    let callback = () => {
+        mongo.connect(fakeMongoUrl, (err, db) => {
+          db.collection('posts').findOne((err, postDTO) => {
+            db.close();
+            postDTO.should.be.deep.equal(post);
+            done();
+          });
+        });
+      }
+      repository.createPost(post, callback);
+
+
+    });
+  });
 });
