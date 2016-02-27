@@ -1,13 +1,10 @@
 'use strict';
 
-class GetPostAction {
-  constructor(repository) {
-    this._repository = repository;
-  }
+function GetPostAction(repository) {
 
-  execute(id) {
-    return this._repository.getPost(id);
-  }
+  return {
+      execute : (id) => repository.getPost(id)
+  };
 }
 
 module.exports = GetPostAction;

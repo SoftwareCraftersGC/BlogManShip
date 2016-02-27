@@ -1,13 +1,10 @@
 'use strict';
 
-class GetAllPostsAction {
-  constructor(repository) {
-    this._repository = repository;
-  }
+function GetAllPostsAction(repository) {
 
-  execute() {
-    return this._repository.getAllPosts();
-  }
+  return {
+    execute : () => repository.getAllPosts()
+  };
 }
 
 module.exports = GetAllPostsAction;

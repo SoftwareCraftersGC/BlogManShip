@@ -1,13 +1,10 @@
 'use strict';
 
-class CreatePostAction {
-  constructor(service) {
-    this._service = service;
-  }
+function CreatePostAction(service) {
 
-  execute(postDTO) {
-    return this._service.createPost(postDTO);
-  }
+  return {
+    execute : (postDTO) => service.createPost(postDTO)
+  };
 }
 
 module.exports = CreatePostAction;
