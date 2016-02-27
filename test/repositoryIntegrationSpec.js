@@ -1,6 +1,6 @@
 'use strict';
 
-let should = require('chai').should();
+require('chai').should();
 let mongo = require('mongodb');
 
 let MongoRepository = require('../src/infrastructure/mongoRepository');

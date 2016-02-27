@@ -8,11 +8,11 @@ class MongoRepository {
   }
 
   _executeOnDatabase(callback) {
-    mongo.connect(this._uri, callback)
+    mongo.connect(this._uri, callback);
   }
 
   createPost(post) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const insertPost = (err, db) => {
         db.collection('posts').insert(post, () => {
           db.close();
@@ -24,7 +24,7 @@ class MongoRepository {
   }
 
   getAllPosts() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const findAllPosts = (err, db) => {
         db.collection('posts').find((err, cursor) => {
           cursor.toArray((err, posts) => {
@@ -39,9 +39,9 @@ class MongoRepository {
 
   getPost(id) {
     let ObjectId = new mongo.ObjectID(id);
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const findPost = (err, db) => {
-        db.collection('posts').findOne({"_id": ObjectId}, (err, post) => {
+        db.collection('posts').findOne({'_id': ObjectId}, (err, post) => {
           db.close();
           resolve(this._exportPost(post));
         });
@@ -58,7 +58,7 @@ class MongoRepository {
       'title': post.title,
       'content': post.content,
       'author': post.author
-    }
+    };
   }
 }
 
