@@ -2,16 +2,13 @@
 
 let mongo = require('mongodb');
 
-class MongoRepository {
-  constructor(uri) {
-    this._uri = uri;
+function MongoRepository(uri) {
+
+  function executeOnDatabase(callback) {
+    mongo.connect(uri, callback);
   }
 
-  _executeOnDatabase(callback) {
-    mongo.connect(this._uri, callback);
-  }
-
-  createPost(post) {
+  function createPost(post) {
     return new Promise((resolve) => {
       const insertPost = (err, db) => {
         db.collection('posts').insert(post, () => {
@@ -19,11 +16,11 @@ class MongoRepository {
           resolve();
         });
       };
-      this._executeOnDatabase(insertPost);
+      this.executeOnDatabase(insertPost);
     });
   }
 
-  getAllPosts() {
+  function getAllPosts() {
     return new Promise((resolve) => {
       const findAllPosts = (err, db) => {
         db.collection('posts').find((err, cursor) => {
@@ -33,24 +30,24 @@ class MongoRepository {
           });
         });
       };
-      this._executeOnDatabase(findAllPosts);
+      this.executeOnDatabase(findAllPosts);
     });
   }
 
-  getPost(id) {
+  function getPost(id) {
     let ObjectId = new mongo.ObjectID(id);
     return new Promise((resolve) => {
       const findPost = (err, db) => {
         db.collection('posts').findOne({'_id': ObjectId}, (err, post) => {
           db.close();
-          resolve(this._exportPost(post));
+          resolve(this.exportPost(post));
         });
       };
-      this._executeOnDatabase(findPost);
+      this.executeOnDatabase(findPost);
     });
   }
 
-  _exportPost (post) {
+  function exportPost (post) {
     if (!post) {
       return {};
     }
@@ -59,6 +56,12 @@ class MongoRepository {
       'content': post.content,
       'author': post.author
     };
+  }
+
+  return {
+    createPost : createPost,
+    getAllPosts: getAllPosts,
+    getPost: getPost
   }
 }
 
