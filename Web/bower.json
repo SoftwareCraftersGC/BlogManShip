@@ -1,0 +1,23 @@
+{
+  "name": "web",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Miguel Angel Viera Gonzalez <mangelviera93@gmail.com>",
+    "Rubén Díaz Martínez <rubendm92@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/SoftwareCraftsmanshipGC/BlogManShip",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.2.0",
+    "paper-card": "PolymerElements/paper-card#^1.1.1"
+  }
+}
