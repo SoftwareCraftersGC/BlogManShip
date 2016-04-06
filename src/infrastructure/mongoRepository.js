@@ -16,7 +16,7 @@ function MongoRepository(uri) {
           resolve();
         });
       };
-      this.executeOnDatabase(insertPost);
+      executeOnDatabase(insertPost);
     });
   }
 
@@ -30,7 +30,7 @@ function MongoRepository(uri) {
           });
         });
       };
-      this.executeOnDatabase(findAllPosts);
+      executeOnDatabase(findAllPosts);
     });
   }
 
@@ -40,10 +40,10 @@ function MongoRepository(uri) {
       const findPost = (err, db) => {
         db.collection('posts').findOne({'_id': ObjectId}, (err, post) => {
           db.close();
-          resolve(this.exportPost(post));
+          resolve(exportPost(post));
         });
       };
-      this.executeOnDatabase(findPost);
+      executeOnDatabase(findPost);
     });
   }
 
