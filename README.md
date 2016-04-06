@@ -1,11 +1,6 @@
 Run tests:
 
-vagrant init ubuntu/trusty64
-vagrant up
-vagrant ssh
-cd /vagrant
-
 npm install
-sudo mkdir /mongoData
-mongod --dbpath /mongoData --port 12345 >/vagrant/mongodb.log &
+sudo mkdir data
+mongod --dbpath ./data --port 12345
 npm test
