@@ -62,7 +62,7 @@ function MongoRepository(uri) {
     createPost : createPost,
     getAllPosts: getAllPosts,
     getPost: getPost
-  }
+};
 }
 
 module.exports = MongoRepository;
