@@ -11,9 +11,14 @@ function MongoRepository(uri) {
     function createPost(post) {
         return new Promise((resolve) => {
             const insertPost = (err, db) => {
-                db.collection('posts').insert(post, () => {
+                db.collection('posts').insert(post, (err, result) => {
                     db.close();
-                    resolve();
+                    if (err) {
+                        reject(err);
+                        console.log('what');
+                        return;
+                    }
+                    resolve(result);
                 });
             };
             executeOnDatabase(insertPost);
@@ -26,6 +31,10 @@ function MongoRepository(uri) {
                 db.collection('posts').find((err, cursor) => {
                     cursor.toArray((err, posts) => {
                         db.close();
+                        if (err) {
+                            reject(err);
+                            return;
+                        }
                         resolve(posts);
                     });
                 });
@@ -40,6 +49,10 @@ function MongoRepository(uri) {
             const findPost = (err, db) => {
                 db.collection('posts').findOne({'_id': ObjectId}, (err, post) => {
                     db.close();
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
                     resolve(exportPost(post));
                 });
             };

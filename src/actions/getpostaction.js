@@ -5,7 +5,7 @@ function GetPostAction(repository) {
   return {
       execute : (id) => new Promise((resolve, reject) => {
           repository.getPost(id).then((post) => resolve(post))
-          .catch();
+          .catch((err) => reject(err));
       })
   };
 }
