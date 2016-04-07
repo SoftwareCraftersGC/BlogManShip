@@ -3,7 +3,10 @@
 function GetPostAction(repository) {
 
   return {
-      execute : (id) => repository.getPost(id)
+      execute : (id) => new Promise((resolve, reject) => {
+          repository.getPost(id).then((post) => resolve(post))
+          .catch();
+      })
   };
 }
 

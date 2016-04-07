@@ -7,42 +7,58 @@ let CreatePostAction = require('../src/actions/createpostaction');
 let GetPostAction = require('../src/actions/getpostaction');
 
 describe('getAllPostAction should return', () => {
-  it('a list with all the posts available', () => {
+    it('a list with all the posts available', (done) => {
 
-    let getAllPosts = sinon.spy();
-    let postRepository = {getAllPosts : getAllPosts};
+        let getAllPosts = sinon.spy();
+        let postRepository = {
+            getAllPosts : () => new Promise((resolve, reject) => {
+                getAllPosts();
+                resolve();
+            })
+        };
 
-    let action = new GetAllPostsAction(postRepository);
-    action.execute();
-    sinon.assert.calledOnce(getAllPosts);
-  });
+        let action = GetAllPostsAction(postRepository);
+        action.execute().then(() => {
+            sinon.assert.calledOnce(getAllPosts);
+            done();
+        });
+    });
 });
 
 describe('getSinglePost should return', () => {
-  it('a post given an specific id', () => {
+    it('a post given an specific id', (done) => {
+        const postId = 'anyId';
+        let getPost = sinon.spy();
+        let postRepository = {getPost : (id) => new Promise((resolve, reject) => {
+            getPost(id);
+            resolve();
+        })};
 
-    let getPost = sinon.spy();
-    let postRepository = {getPost : getPost};
-
-    let action = new GetPostAction(postRepository);
-    action.execute('anyId');
-    sinon.assert.calledWith(getPost, 'anyId');
-  });
+        let action = new GetPostAction(postRepository);
+        action.execute(postId).then(() => {
+            sinon.assert.calledWith(getPost, postId);
+            done();
+        });
+    });
 });
 
-describe('createPost should', () => {
-  it('call postService.createPost', () => {
+describe('createPost should', (done) => {
+    it('call postService.createPost', () => {
 
-    let createPost = sinon.spy();
-    let postService = {createPost : createPost};
-
-    let action = new CreatePostAction(postService);
-    let postDTO = {
-      'title' : 'Foo Bar Title',
-      'content' : 'Foo Bar Content',
-      'author' : 'Foo Bar Author'
-    };
-    action.execute(postDTO);
-    sinon.assert.calledOnce(createPost);
-  });
+        let createPost = sinon.spy();
+        let postService = {createPost : (postDTO) => new Promise((resolve, reject) => {
+            createPost(postDTO);
+            resolve();
+        })}
+        let action = new CreatePostAction(postService);
+        let postDTO = {
+            'title' : 'Foo Bar Title',
+            'content' : 'Foo Bar Content',
+            'author' : 'Foo Bar Author'
+        };
+        action.execute(postDTO).then(() => {
+            sinon.assert.calledWith(createPost, postDTO);
+            done();
+        });
+    });
 });
