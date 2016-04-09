@@ -2,6 +2,8 @@
 <link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animations.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="list-view.html">
 <link rel="import" href="full-view.html">
 
@@ -10,22 +12,74 @@
     <style>
     :host {
         display: block;
-        height: 80%;
     }
-    neon-animated-pages {
-        height: 100%;
+
+    paper-scroll-header-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: var(--paper-grey-200, #eee);
+      --paper-scroll-header-panel-full-header: {
+        background-image: url(/images/background-logo.jpg);
+      };
+      --paper-scroll-header-panel-condensed-header: {
+          background-image: url(/images/background-logo.jpg);
+      };
     }
+
+    paper-scroll-header-panel ::content::-webkit-scrollbar {
+        display: none;
+    }
+
+    paper-toolbar {
+      height: 192px;
+      background-color: transparent;
+      overflow: visible;
+    }
+    paper-icon-button {
+      margin: 0 8px;
+      --paper-icon-button-ink-color: white;
+    }
+    .bottom-text {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      font-size: 20px;
+      padding-bottom: 10px;
+    }
+    .subtitle {
+      padding-top: 4px;
+      font-size: 16px;
+      color: #ccc;
+    }
+
+    .content {
+      padding: 16px 10px 16px 50px;
+      height: 400%;
+    }
+    .indent {
+      margin-left: 60px;
+    }
+    .spacer {
+      @apply(--layout-flex);
+    }
+
     </style>
     <iron-ajax
     auto
     url="/posts"
     handle-as="json"
     last-response="{{posts}}"></iron-ajax>
-    <h1>Software Craftsmanship Gran Canaria</h1>
-    <neon-animated-pages id="pages" selected="0">
-        <list-view data="[[posts]]" on-item-click="_onItemClick"></list-view>
-        <full-view id="postView" on-close="_onClose"></full-view>
-    </neon-animated-pages>
+    <paper-scroll-header-panel condenses keep-condensed-header header-height="192" condensed-header-height="128">
+        <paper-toolbar></paper-toolbar>
+
+        <neon-animated-pages id="pages" class="content" selected="0">
+            <list-view data="[[posts]]" on-item-click="_onItemClick"></list-view>
+            <full-view id="postView" on-close="_onClose"></full-view>
+        </neon-animated-pages>
+
+    </paper-scroll-header-panel>
 </template>
 
 </dom-module>
@@ -38,6 +92,10 @@ Polymer({
 
     properties: {
         posts : Array
+    },
+
+    attached: function () {
+
     },
 
     _onItemClick: function(event) {

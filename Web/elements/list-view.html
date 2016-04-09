@@ -6,108 +6,120 @@
 <link rel="import" href="../bower_components/marked-element/marked-element.html">
 
 <dom-module id="list-view">
-  <template>
+    <template>
     <style>
-      :host {
+    :host {
         @apply(--layout-vertical);
-      }
+    }
 
-      .main {
+    .main {
         @apply(--layout-flex);
         @apply(--layout-scroll);
-      }
-      paper-card {
-          width: calc(100% - 20px);
-          margin: 10px;
-      }
-      paper-card .card-actions p{
-          text-align: right;
-          margin: 2px;
-          font-size: smaller;
-      }
+    }
+    paper-card {
+        width: calc(100% - 20px);
+        margin: 10px;
+    }
+    paper-card .card-actions p{
+        text-align: right;
+        margin: 2px;
+        font-size: smaller;
+    }
 
-      paper-card .card-actions p:first-child {
-          float: left;
-      }
+    paper-card .card-actions p:first-child {
+        float: left;
+    }
+
+    marked-element .markdown-html {
+        display: block;
+        display: -webkit-box;
+        height: calc(20px * 1.4 * 3);
+        margin: 0 auto;
+        line-height: 1.4;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     </style>
 
     <div class="main">
         <template is="dom-repeat" items="[[data]]" as="post">
             <paper-card heading="[[post.title]]" on-tap="_onClick" post="[[post]]">
-              <div class="card-content">
-                  <marked-element markdown="[[post.content]]">
-                      <div class="markdown-html"></div>
-                  </marked-element>
-              </div>
-              <div class="card-actions">
-                  <p>[[post.author]]</p>
-                  <p>8 de Abril de 2016</p>
-              <div>
-            </paper-card>
+                <div class="card-content">
+                    <marked-element markdown="[[post.content]]">
+                        <div class="markdown-html"></div>
+                    </marked-element>
+                </div>
+                <div class="card-actions">
+                    <p>[[post.author]]</p>
+                    <p>8 de Abril de 2016</p>
+                    <div>
+                    </paper-card>
+                </template>
+
+            </div>
+
         </template>
 
-    </div>
+    </dom-module>
 
-  </template>
+    <script>
 
-</dom-module>
+    Polymer({
 
-<script>
+        is: 'list-view',
 
-  Polymer({
+        behaviors: [
+            Polymer.NeonAnimatableBehavior
+        ],
 
-    is: 'list-view',
+        properties: {
 
-    behaviors: [
-      Polymer.NeonAnimatableBehavior
-    ],
+            data: {
+                type: Array,
+                value: function() {
+                    return [];
+                }
+            },
 
-    properties: {
+            animationConfig: {
+                type: Object,
+                value: function() {
+                    return {
+                        'entry': [{
+                            name: 'fade-in-animation',
+                            node: this
+                        }],
 
-      data: {
-        type: Array,
-        value: function() {
-          return [];
+                        'exit': [{
+                            name: 'hero-animation',
+                            id: 'hero',
+                            fromPage: this
+                        }]
+                    };
+                }
+            }
+
+        },
+
+        _onClick: function(event) {
+            this.sharedElements = {
+                'hero': event.target,
+            };
+
+            var element = event.target;
+
+            while (element.tagName.toLowerCase() !== 'paper-card') {
+                element = element.parentNode;
+            }
+
+            this.fire('item-click', {
+                item: event.target,
+                post: element.post
+            });
         }
-      },
 
-      animationConfig: {
-        type: Object,
-        value: function() {
-          return {
-            'entry': [{
-              name: 'fade-in-animation',
-              node: this
-            }],
+    });
 
-            'exit': [{
-              name: 'hero-animation',
-              id: 'hero',
-              fromPage: this
-            }]
-          };
-        }
-      }
-
-    },
-
-    _onClick: function(event) {
-      this.sharedElements = {
-        'hero': event.target,
-      };
-
-      var element = event.target;
-
-      while (element.tagName.toLowerCase() !== 'paper-card') {
-          element = element.parentNode;
-      }
-
-      this.fire('item-click', {
-        item: event.target,
-        post: element.post
-      });
-    }
-
-  });
-
-</script>
+    </script>
