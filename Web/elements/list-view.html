@@ -92,15 +92,19 @@
     },
 
     _onClick: function(event) {
-
-      // configure the page animation
       this.sharedElements = {
         'hero': event.target,
       };
 
+      var element = event.target;
+
+      while (element.tagName.toLowerCase() !== 'paper-card') {
+          element = element.parentNode;
+      }
+
       this.fire('item-click', {
         item: event.target,
-        post: event.target.post
+        post: element.post
       });
     }
 
