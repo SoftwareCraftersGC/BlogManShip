@@ -16,6 +16,7 @@
         @apply(--layout-flex);
         @apply(--layout-scroll);
     }
+
     paper-card {
         width: calc(100% - 20px);
         margin: 10px;
@@ -54,72 +55,69 @@
                 <div class="card-actions">
                     <p>[[post.author]]</p>
                     <p>8 de Abril de 2016</p>
-                    <div>
-                    </paper-card>
-                </template>
-
-            </div>
-
+                </div>
+            </paper-card>
         </template>
+    </div>
+</template>
 
-    </dom-module>
+<script>
 
-    <script>
+Polymer({
 
-    Polymer({
+    is: 'list-view',
 
-        is: 'list-view',
+    behaviors: [
+        Polymer.NeonAnimatableBehavior
+    ],
 
-        behaviors: [
-            Polymer.NeonAnimatableBehavior
-        ],
+    properties: {
 
-        properties: {
-
-            data: {
-                type: Array,
-                value: function() {
-                    return [];
-                }
-            },
-
-            animationConfig: {
-                type: Object,
-                value: function() {
-                    return {
-                        'entry': [{
-                            name: 'fade-in-animation',
-                            node: this
-                        }],
-
-                        'exit': [{
-                            name: 'hero-animation',
-                            id: 'hero',
-                            fromPage: this
-                        }]
-                    };
-                }
+        data: {
+            type: Array,
+            value: function() {
+                return [];
             }
-
         },
 
-        _onClick: function(event) {
-            this.sharedElements = {
-                'hero': event.target,
-            };
+        animationConfig: {
+            type: Object,
+            value: function() {
+                return {
+                    'entry': [{
+                        name: 'fade-in-animation',
+                        node: this
+                    }],
 
-            var element = event.target;
-
-            while (element.tagName.toLowerCase() !== 'paper-card') {
-                element = element.parentNode;
+                    'exit': [{
+                        name: 'hero-animation',
+                        id: 'hero',
+                        fromPage: this
+                    }]
+                };
             }
-
-            this.fire('item-click', {
-                item: event.target,
-                post: element.post
-            });
         }
 
-    });
+    },
 
-    </script>
+    _onClick: function(event) {
+        this.sharedElements = {
+            'hero': event.target,
+        };
+
+        var element = event.target;
+
+        while (element.tagName.toLowerCase() !== 'paper-card') {
+            element = element.parentNode;
+        }
+
+        this.fire('item-click', {
+            item: event.target,
+            post: element.post
+        });
+    }
+
+});
+
+</script>
+</dom-module>

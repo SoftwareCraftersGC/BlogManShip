@@ -2,17 +2,21 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>BlogManShip</title>
         <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
-        <link rel="import" href="elements/scgc-blog.html">
-        <style media="screen">
-            body {
-                margin: 0;
-                height : 100vh;
-            }
-        </style>
+        <link rel="import" href="bower_components/polymer/polymer.html">
+        <link rel="import" href="elements/scgc-header.html">
+        <link rel="import" href="elements/scgc-posts.html">
+        <title>BlogManShip</title>
     </head>
+
+    <style media="screen">
+        body {
+            margin: 0;
+        }
+    </style>
+
     <body>
-        <scgc-blog></scgc-blog>
+        <scgc-header></scgc-header>
+        <scgc-posts></scgc-posts>
     </body>
 </html>

@@ -1,0 +1,32 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/shadow.html">
+
+
+<dom-module id="scgc-header">
+    <style>
+        .container {
+            max-height: 200px;
+            text-align: center;
+            background-color: black;
+            padding: 20px;
+            @apply(--shadow-elevation-8dp);
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-height: 200px;
+        }
+    </style>
+
+  <template>
+      <div class="container">
+          <img src="../images/background-logo.png" alt="" />
+      </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'scgc-header'
+    });
+  </script>
+</dom-module>

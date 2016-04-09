@@ -8,78 +8,43 @@
 <link rel="import" href="full-view.html">
 
 <dom-module id="scgc-blog">
-    <template>
+    <templawer ese pedazo de por la gloria de mi madre va usté muy cargadoo ese pedazo de llevame al sircoo quietoote>
     <style>
     :host {
         display: block;
+        height: 100vh;
     }
 
-    paper-scroll-header-panel {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background-color: var(--paper-grey-200, #eee);
-      --paper-scroll-header-panel-full-header: {
-        background-image: url(/images/background-logo.jpg);
-      };
-      --paper-scroll-header-panel-condensed-header: {
-          background-image: url(/images/background-logo.jpg);
-      };
+    header {
+        background-image: url(/images/background-logo.png);
+        background-color: black;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 128px;
+        background-position: center;
+        border: 12px solid black;
     }
-
-    paper-scroll-header-panel ::content::-webkit-scrollbar {
-        display: none;
-    }
-
-    paper-toolbar {
-      height: 192px;
-      background-color: transparent;
-      overflow: visible;
-    }
-    paper-icon-button {
-      margin: 0 8px;
-      --paper-icon-button-ink-color: white;
-    }
-    .bottom-text {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-      font-size: 20px;
-      padding-bottom: 10px;
-    }
-    .subtitle {
-      padding-top: 4px;
-      font-size: 16px;
-      color: #ccc;
-    }
-
-    .content {
-      padding: 16px 10px 16px 50px;
-      height: 400%;
-    }
-    .indent {
-      margin-left: 60px;
-    }
-    .spacer {
-      @apply(--layout-flex);
-    }
-
     </style>
     <iron-ajax
     auto
     url="/posts"
     handle-as="json"
     last-response="{{posts}}"></iron-ajax>
-    <paper-scroll-header-panel condenses keep-condensed-header header-height="192" condensed-header-height="128">
-        <paper-toolbar></paper-toolbar>
+    <header></header>
+    <template is="dom-repeat" items="[[posts]]" as="post">
+        <paper-card heading="[[post.title]]" on-tap="_onClick" post="[[post]]">
+            <div class="card-content">
+                <marked-element markdown="[[post.content]]">
+                    <div class="markdown-html"></div>
+                </marked-element>
+            </div>
+            <div class="card-actions">
+                <p>[[post.author]]</p>
+                <p>8 de Abril de 2016</p>
+            </div>
+        </paper-card>
+    </template>
 
-        <neon-animated-pages id="pages" class="content" selected="0">
-            <list-view data="[[posts]]" on-item-click="_onItemClick"></list-view>
-            <full-view id="postView" on-close="_onClose"></full-view>
-        </neon-animated-pages>
-
-    </paper-scroll-header-panel>
 </template>
 
 </dom-module>
@@ -101,6 +66,7 @@ Polymer({
     _onItemClick: function(event) {
         this.$.postView.post = event.detail.post;
         this.$.pages.selected = 1;
+        this.querySelector('paper-scroll-header-panel').scrollToTop(true);
     },
 
     _onClose: function() {

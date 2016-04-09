@@ -1,0 +1,76 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+<link rel="import" href="../bower_components/paper-styles/shadow.html">
+<link rel="import" href="../bower_components/marked-element/marked-element.html">
+
+
+<dom-module id="scgc-posts">
+  <template>
+    <style>
+        :host {
+            display: block;
+            background-color: var(--paper-grey-200);
+        }
+
+        .container {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        paper-card {
+            width: 100%;
+            margin-top: 20px;
+            @apply(--shadow-elevation-6dp);
+            @apply(--paper-font-subhead);
+            --paper-card-header-text: {
+                @apply(--paper-font-title);
+             };
+             --paper-card-header: {
+                 border-bottom: 2px solid var(--paper-grey-300);
+             };
+            --paper-card-actions: {
+                @apply(--layout-horizontal);
+                @apply(--layout-justified);
+            };
+        }
+
+        paper-card .card-actions p {
+            @apply(--paper-font-body1);
+        }
+    </style>
+
+    <iron-ajax auto url="/posts" handle-as="json" last-response="{{posts}}"></iron-ajax>
+    <div class="container">
+        <template is="dom-repeat" items="[[posts]]" as="post">
+            <paper-card heading="[[post.title]]" on-tap="_onClick" post="[[post]]">
+                <div class="card-content">
+                    <marked-element markdown="[[post.content]]">
+                        <div class="markdown-html"></div>
+                    </marked-element>
+                </div>
+                <div class="card-actions">
+                    <p>[[post.author]]</p>
+                    <p>8 de Abril de 2016</p>
+                </div>
+            </paper-card>
+        </template>
+    </div>
+
+
+  </template>
+  <script>
+    Polymer({
+      is: 'scgc-posts',
+
+      properties: {
+          posts: {
+              type: Array,
+          }
+      }
+    });
+  </script>
+</dom-module>
