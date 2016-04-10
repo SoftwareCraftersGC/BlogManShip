@@ -9,7 +9,7 @@ function MongoRepository(uri) {
     }
 
     function createPost(post) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             const insertPost = (err, db) => {
                 db.collection('posts').insert(post, (err, result) => {
                     db.close();
@@ -26,7 +26,7 @@ function MongoRepository(uri) {
     }
 
     function getAllPosts() {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             const findAllPosts = (err, db) => {
                 db.collection('posts').find((err, cursor) => {
                     cursor.toArray((err, posts) => {
@@ -45,7 +45,7 @@ function MongoRepository(uri) {
 
     function getPost(id) {
         let ObjectId = new mongo.ObjectID(id);
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             const findPost = (err, db) => {
                 db.collection('posts').findOne({'_id': ObjectId}, (err, post) => {
                     db.close();

@@ -11,7 +11,7 @@ describe('getAllPostAction should return', () => {
 
         let getAllPosts = sinon.spy();
         let postRepository = {
-            getAllPosts : () => new Promise((resolve, reject) => {
+            getAllPosts : () => new Promise((resolve) => {
                 getAllPosts();
                 resolve();
             })
@@ -29,7 +29,7 @@ describe('getSinglePost should return', () => {
     it('a post given an specific id', (done) => {
         const postId = 'anyId';
         let getPost = sinon.spy();
-        let postRepository = {getPost : (id) => new Promise((resolve, reject) => {
+        let postRepository = {getPost : (id) => new Promise((resolve) => {
             getPost(id);
             resolve();
         })};
@@ -46,10 +46,10 @@ describe('createPost should', (done) => {
     it('call postService.createPost', () => {
 
         let createPost = sinon.spy();
-        let postService = {createPost : (postDTO) => new Promise((resolve, reject) => {
+        let postService = {createPost : (postDTO) => new Promise((resolve) => {
             createPost(postDTO);
             resolve();
-        })}
+        })};
         let action = new CreatePostAction(postService);
         let postDTO = {
             'title' : 'Foo Bar Title',
