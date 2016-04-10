@@ -9,9 +9,9 @@ app.use(bodyParser.json());
 
 app.use('/', express.static(__dirname + '/../Web'));
 
-const mongoUri = PROCESS.MONGOLAB_URI || 'mongodb://localhost:12345/blog';
+const mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:12345/blog';
 
-const repository = require('../src/infrastructure/mongoRepository')(remoteMongoUri);
+const repository = require('../src/infrastructure/mongoRepository')(mongoUri);
 
 const getAllPostsAction = require('../src/actions/getallpostsaction')(repository);
 const getPostAction = require('../src/actions/getpostaction')(repository);
