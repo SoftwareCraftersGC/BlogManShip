@@ -9,9 +9,7 @@ app.use(bodyParser.json());
 
 app.use('/', express.static(__dirname + '/../Web'));
 
-const remoteMongoUri = 'mongodb://scgc-blog:scgc@ds013300.mlab.com:13300/heroku_42jls8g8'
-const localMongoUri = 'mongodb://localhost:12345/blog';
-
+const mongoUri = PROCESS.MONGOLAB_URI || 'mongodb://localhost:12345/blog';
 
 const repository = require('../src/infrastructure/mongoRepository')(remoteMongoUri);
 
