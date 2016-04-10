@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/.bin/gulp test"
+
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +17,10 @@
     "gulp-eslint": "2.0.0",
     "gulp-mocha": "2.2.0",
     "sinon": "1.17.3"
+},
+  "scripts" : {
+    "start" : "node WebController/app.js",
+    "postinstall" : "sh SetUp.sh",
+    "test": "./node_modules/.bin/gulp test"
   }
 }
