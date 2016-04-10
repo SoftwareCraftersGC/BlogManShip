@@ -22,5 +22,9 @@
     "start" : "node WebController/app.js",
     "postinstall" : "sh SetUp.sh",
     "test": "./node_modules/.bin/gulp test"
-  }
+},
+"engines": {
+    "node" : "5.6.0",
+    "npm" : "3.8.3"
+}
 }
