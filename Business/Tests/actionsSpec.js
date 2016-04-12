@@ -5,6 +5,7 @@ let sinon = require('sinon');
 let GetAllPostsAction = require('../src/actions/getallpostsaction');
 let CreatePostAction = require('../src/actions/createpostaction');
 let GetPostAction = require('../src/actions/getpostaction');
+let GetLastPostsAction = require('../src/actions/GetLastPostsAction');
 
 describe('getAllPostAction should return', () => {
     it('a list with all the posts available', (done) => {
@@ -58,6 +59,22 @@ describe('createPost should', (done) => {
         };
         action.execute(postDTO).then(() => {
             sinon.assert.calledWith(createPost, postDTO);
+            done();
+        });
+    });
+});
+
+describe('getLastPosts should', (done) => {
+    it('call repository.getLastPosts', () => {
+        let getLastPosts = sinon.spy();
+        let repository = {getLastPosts : () => new Promise((resolve) => {
+            getLastPosts();
+            resolve();
+        })};
+
+        let action = GetLastPostsAction(repository);
+        action.execute().then(() => {
+            sinon.assert.calledOnce(getLastPosts);
             done();
         });
     });
