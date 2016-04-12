@@ -10,7 +10,6 @@ app.use(bodyParser.json());
 
 app.use('/', express.static(__dirname + '/../Web'));
 
-
 const repository = require('../Business/src/infrastructure/mongoRepository')(mongoUri);
 
 const getAllPostsAction = require('../Business/src/actions/getallpostsaction')(repository);
