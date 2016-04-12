@@ -2,14 +2,14 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-var port = process.env.PORT || 5000;
-var node_env = process.env.NODE_ENV;
+const port = process.env.PORT || 5000;
+const node_env = process.env.NODE_ENV;
+const mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:12345/blog';
 
 app.use(bodyParser.json());
 
 app.use('/', express.static(__dirname + '/../Web'));
 
-const mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:12345/blog';
 
 const repository = require('../Business/src/infrastructure/mongoRepository')(mongoUri);
 
