@@ -11,11 +11,11 @@ app.use('/', express.static(__dirname + '/../Web'));
 
 const mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost:12345/blog';
 
-const repository = require('../src/infrastructure/mongoRepository')(mongoUri);
+const repository = require('../Business/src/infrastructure/mongoRepository')(mongoUri);
 
-const getAllPostsAction = require('../src/actions/getallpostsaction')(repository);
-const getPostAction = require('../src/actions/getpostaction')(repository);
-const createPostAction = require('../src/actions/createpostaction')(repository);
+const getAllPostsAction = require('../Business/src/actions/getallpostsaction')(repository);
+const getPostAction = require('../Business/src/actions/getpostaction')(repository);
+const createPostAction = require('../Business/src/actions/createpostaction')(repository);
 
 app.get('/posts', (req, res) => getAllPostsAction.execute().then((posts) => res.send(posts)));
 app.get('/posts/:id', (req, res) => getPostAction.execute(req.params.id).then((post) => res.send(post)));

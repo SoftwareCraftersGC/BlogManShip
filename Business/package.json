@@ -1,0 +1,6 @@
+{
+    "name" : "Business",
+    "dependencies": {
+        "mongodb": "2.1.7"
+    }
+}
