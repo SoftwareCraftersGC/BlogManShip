@@ -35,7 +35,7 @@ describe('getSinglePost should return', () => {
             resolve();
         })};
 
-        let action = new GetPostAction(postRepository);
+        let action = GetPostAction(postRepository);
         action.execute(postId).then(() => {
             sinon.assert.calledWith(getPost, postId);
             done();
@@ -51,7 +51,7 @@ describe('createPost should', (done) => {
             createPost(postDTO);
             resolve();
         })};
-        let action = new CreatePostAction(postService);
+        let action = CreatePostAction(postService);
         let postDTO = {
             'title' : 'Foo Bar Title',
             'content' : 'Foo Bar Content',
