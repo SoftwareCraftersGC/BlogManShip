@@ -23,7 +23,8 @@ describe('post repository', () => {
         const postDTO = {
             'title' : 'Foo Bar Title',
             'content' : 'Foo Bar Content',
-            'author' : 'Foo Bar Author'
+            'author' : 'Foo Bar Author',
+            'date': '1460570559324'
         };
 
         before((done) => {
@@ -32,7 +33,8 @@ describe('post repository', () => {
                     '_id' : new mongo.ObjectID(postId),
                     'title' : postDTO.title,
                     'content' : postDTO.content,
-                    'author' : postDTO.author
+                    'author' : postDTO.author,
+                    'date': postDTO.date
                 }, () => {
                     db.close();
                     done();
@@ -44,7 +46,7 @@ describe('post repository', () => {
             repository.getPost(postId).then((post) => {
                 post.should.be.deep.equal(postDTO);
                 done();
-            });
+            }).catch((err) => console.log(err));
         });
 
         it('should return an error when an id doesnt exist on the repository', (done) => {

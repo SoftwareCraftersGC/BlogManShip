@@ -15,7 +15,6 @@ function MongoRepository(uri) {
                     db.close();
                     if (err) {
                         reject(err);
-                        console.log('what');
                         return;
                     }
                     resolve(result);
@@ -67,7 +66,8 @@ function MongoRepository(uri) {
         return {
             'title': post.title,
             'content': post.content,
-            'author': post.author
+            'author': post.author,
+            'date' : post.date
         };
     }
 
