@@ -54,22 +54,35 @@
                 </div>
                 <div class="card-actions">
                     <p>[[post.author]]</p>
-                    <p>8 de Abril de 2016</p>
+                    <p>[[_formatDateTime(post.date)]]</p>
                 </div>
             </paper-card>
         </template>
     </div>
-
-
   </template>
   <script>
     Polymer({
       is: 'scgc-posts',
 
       properties: {
-          posts: {
-              type: Array,
-          }
+          posts: Array
+      },
+
+      _formatDateTime: function (dateInMillis) {
+          var date = new Date(parseInt(dateInMillis));
+          return this._formatDate(date) + ' ' + this._formatTime(date);
+      },
+
+      _formatDate: function (date) {
+          return date.getFullYear() + '/' + this._formatWithTwoDigits(date.getMonth() + 1) + '/' + this._formatWithTwoDigits(date.getDate());
+      },
+
+      _formatTime: function (date) {
+          return this._formatWithTwoDigits(date.getHours()) + ':' + this._formatWithTwoDigits(date.getMinutes());
+      },
+
+      _formatWithTwoDigits: function (number) {
+          return ('00' + number).slice(-2);
       }
     });
   </script>
