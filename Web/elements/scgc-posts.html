@@ -1,13 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/paper-styles/color.html">
-<link rel="import" href="../bower_components/paper-styles/typography.html">
-<link rel="import" href="../bower_components/paper-styles/shadow.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="post-preview.html">
+<link rel="import" href="post-view.html">
 
 <dom-module id="scgc-posts">
   <template>
@@ -23,10 +20,6 @@
             margin-right: auto;
         }
 
-        header {
-            @apply(--layout-horizontal);
-            @apply(--layout-center);
-        }
     </style>
 
     <iron-ajax auto url="/posts" handle-as="json" last-response="{{posts}}"></iron-ajax>
@@ -36,16 +29,7 @@
                 <post-preview post="[[post]]" on-tap="_showPost"></post-preview>
             </template>
         </div>
-      <div>
-          <header>
-              <paper-icon-button icon="icons:arrow-back" on-tap="_back"></paper-icon-button>
-              <h2>[[_selectedPost.title]]</h2>
-          </header>
-          <h4>[[_selectedPost.author]]</h4>
-          <marked-element markdown="[[_selectedPost.content]]">
-              <div class="markdown-html"></div>
-          </marked-element>
-      </div>
+        <post-view post="[[_selectedPost]]" on-back="_back"></post-view>
     </iron-pages>
 
   </template>
