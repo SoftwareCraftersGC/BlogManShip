@@ -42,18 +42,16 @@ describe('post repository', () => {
             });
         });
 
-        it('should return a specific post when it exists on the repository', (done) => {
-            repository.getPost(postId).then((post) => {
+        it('should return a specific post when it exists on the repository', () => {
+            return repository.getPost(postId).then((post) => {
                 post.should.be.deep.equal(postDTO);
-                done();
-            }).catch((err) => console.log(err));
+            });
         });
 
-        it('should return an error when an id doesnt exist on the repository', (done) => {
+        it('should return an error when an id doesnt exist on the repository', () => {
             let notExistingId = '49d8d54262a98d965a285f00';
-            repository.getPost(notExistingId).then((post) => {
+            return repository.getPost(notExistingId).then((post) => {
                 post.should.be.deep.equal({});
-                done();
             });
         });
     });
@@ -73,10 +71,9 @@ describe('post repository', () => {
             });
         });
 
-        it('should return the list of posts in the repository', (done) => {
-            repository.getAllPosts().then((posts) => {
+        it('should return the list of posts in the repository', () => {
+            return repository.getAllPosts().then((posts) => {
                 posts.length.should.be.equal(3);
-                done();
             });
         });
     });
@@ -89,13 +86,12 @@ describe('post repository', () => {
             author: 'Foo Bar Author'
         };
 
-        it('should create a post into the repository', (done) => {
-            repository.createPost(post).then(() => {
+        it('should create a post into the repository', () => {
+            return repository.createPost(post).then(() => {
                 mongo.connect(fakeMongoUrl, (err, db) => {
                     db.collection('posts').findOne((err, postDTO) => {
                         db.close();
                         postDTO.should.be.deep.equal(post);
-                        done();
                     });
                 });
             });

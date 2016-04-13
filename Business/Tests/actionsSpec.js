@@ -10,7 +10,7 @@ let GetPostAction = require('../src/actions/getpostaction');
 let GetLastPostsAction = require('../src/actions/GetLastPostsAction');
 
 describe('getAllPostAction should return', () => {
-    it('a list with all the posts available', (done) => {
+    it('a list with all the posts available', () => {
 
         const postOneDate = new Date().getTime();
         const postTwoDate = new Date().getTime()  + 1 * 24 * 3600 * 1000;
@@ -39,17 +39,16 @@ describe('getAllPostAction should return', () => {
         };
 
         let action = GetAllPostsAction(postRepository);
-        action.execute().then((posts) => {
+        return action.execute().then((posts) => {
             sinon.assert.calledOnce(getAllPosts);
             posts[0].should.be.deep.equal(expectedPosts[1]);
             posts[1].should.be.deep.equal(expectedPosts[0]);
-            done();
         });
     });
 });
 
 describe('getSinglePost should return', () => {
-    it('a post given an specific id', (done) => {
+    it('a post given an specific id', () => {
         const postId = 'anyId';
         let getPost = sinon.spy();
         let postRepository = {getPost : (id) => new Promise((resolve) => {
@@ -58,14 +57,13 @@ describe('getSinglePost should return', () => {
         })};
 
         let action = GetPostAction(postRepository);
-        action.execute(postId).then(() => {
+        return action.execute(postId).then(() => {
             sinon.assert.calledWith(getPost, postId);
-            done();
         });
     });
 });
 
-describe('createPost should', (done) => {
+describe('createPost should', () => {
     it('call postService.createPost', () => {
 
         let createPost = sinon.spy();
@@ -79,14 +77,13 @@ describe('createPost should', (done) => {
             'content' : 'Foo Bar Content',
             'author' : 'Foo Bar Author'
         };
-        action.execute(postDTO).then(() => {
+        return action.execute(postDTO).then(() => {
             sinon.assert.calledWith(createPost, postDTO);
-            done();
         });
     });
 });
 
-describe('getLastPosts should', (done) => {
+describe('getLastPosts should', () => {
     it('call repository.getLastPosts', () => {
         let getLastPosts = sinon.spy();
         let repository = {getLastPosts : () => new Promise((resolve) => {
@@ -95,9 +92,8 @@ describe('getLastPosts should', (done) => {
         })};
 
         let action = GetLastPostsAction(repository);
-        action.execute().then(() => {
+        return action.execute().then(() => {
             sinon.assert.calledOnce(getLastPosts);
-            done();
         });
     });
 });
