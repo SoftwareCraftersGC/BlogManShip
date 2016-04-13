@@ -9,11 +9,13 @@ let CreatePostAction = require('../src/actions/createpostaction');
 let GetPostAction = require('../src/actions/getpostaction');
 let GetLastPostsAction = require('../src/actions/GetLastPostsAction');
 
+const DAY_IN_MILLISECONDS = 24 * 3600 * 1000;
+
 describe('getAllPostAction should return', () => {
     it('a list with all the posts available', () => {
 
         const postOneDate = new Date().getTime();
-        const postTwoDate = new Date().getTime() + 1 * 24 * 3600 * 1000;
+        const postTwoDate = new Date().getTime() + DAY_IN_MILLISECONDS;
 
         const expectedPosts = [
             createPost('AnyTitle', 'AnyContent', 'AnyAuthor', postOneDate),
