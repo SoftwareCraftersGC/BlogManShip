@@ -1,0 +1,74 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/marked-element/marked-element.html">
+
+
+<dom-module id="post-preview">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            paper-card {
+                width: 100%;
+                margin-top: 20px;
+                @apply(--shadow-elevation-6dp);
+                @apply(--paper-font-subhead);
+                --paper-card-header-text: {
+                    @apply(--paper-font-title);
+                };
+                --paper-card-header: {
+                    border-bottom: 2px solid var(--paper-grey-300);
+                };
+                --paper-card-actions: {
+                    @apply(--layout-horizontal);
+                    @apply(--layout-justified);
+                };
+            }
+
+            paper-card .card-actions p {
+                @apply(--paper-font-body1);
+            }
+
+        </style>
+
+    <paper-card heading="[[post.title]]">
+        <div class="card-content">
+            <marked-element markdown="[[post.content]]">
+                <div class="markdown-html"></div>
+            </marked-element>
+        </div>
+        <div class="card-actions">
+            <p>[[post.author]]</p>
+            <p>[[_formatDateTime(post.date)]]</p>
+        </div>
+    </paper-card>
+
+</template>
+<script>
+Polymer({
+    is: 'post-preview',
+    properties: {
+        post : Object
+    },
+
+    _formatDateTime: function (dateInMillis) {
+        var date = new Date(parseInt(dateInMillis));
+        return this._formatDate(date) + ' ' + this._formatTime(date);
+    },
+
+    _formatDate: function (date) {
+        return date.getFullYear() + '/' + this._formatWithTwoDigits(date.getMonth() + 1) + '/' + this._formatWithTwoDigits(date.getDate());
+    },
+
+    _formatTime: function (date) {
+        return this._formatWithTwoDigits(date.getHours()) + ':' + this._formatWithTwoDigits(date.getMinutes());
+    },
+
+    _formatWithTwoDigits: function (number) {
+        return ('00' + number).slice(-2);
+    }
+});
+</script>
+</dom-module>
