@@ -44,6 +44,11 @@
         paper-card .card-actions p {
             @apply(--paper-font-body1);
         }
+
+        header {
+            @apply(--layout-horizontal);
+            @apply(--layout-center);
+        }
     </style>
 
     <iron-ajax auto url="/posts" handle-as="json" last-response="{{posts}}"></iron-ajax>
@@ -64,8 +69,14 @@
             </template>
         </div>
       <div>
-          <paper-icon-button icon="icons:arrow-back" on-tap="_back"></paper-icon-button>
-          post view
+          <header>
+              <paper-icon-button icon="icons:arrow-back" on-tap="_back"></paper-icon-button>
+              <h2>[[_selectedPost.title]]</h2>
+          </header>
+          <h4>[[_selectedPost.author]]</h4>
+          <marked-element markdown="[[_selectedPost.content]]">
+              <div class="markdown-html"></div>
+          </marked-element>
       </div>
     </iron-pages>
 
@@ -76,6 +87,7 @@
 
       properties: {
           posts: Array,
+          _selectedPost: Object,
           _selected: {
               type: Number,
               value: 0
@@ -84,6 +96,7 @@
 
       _showPost: function (event) {
           this._selected = 1;
+          this._selectedPost = event.currentTarget.post;
       },
 
       _back: function () {
