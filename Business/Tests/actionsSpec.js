@@ -13,21 +13,11 @@ describe('getAllPostAction should return', () => {
     it('a list with all the posts available', () => {
 
         const postOneDate = new Date().getTime();
-        const postTwoDate = new Date().getTime()  + 1 * 24 * 3600 * 1000;
+        const postTwoDate = new Date().getTime() + 1 * 24 * 3600 * 1000;
 
         const expectedPosts = [
-            {
-                title : 'AnyTitle',
-                content : 'AnyContent',
-                author : 'AnyAuthor',
-                date : postOneDate
-            },
-            {
-                title : 'AnyTitle',
-                content : 'AnyContent',
-                author : 'AnyAuthor',
-                date : postTwoDate
-            }
+            createPost('AnyTitle', 'AnyContent', 'AnyAuthor', postOneDate),
+            createPost('AnyTitle', 'AnyContent', 'AnyAuthor', postTwoDate)
         ];
 
         let getAllPosts = sinon.spy();
@@ -72,11 +62,7 @@ describe('createPost should', () => {
             resolve();
         })};
         let action = CreatePostAction(postService);
-        let postDTO = {
-            'title' : 'Foo Bar Title',
-            'content' : 'Foo Bar Content',
-            'author' : 'Foo Bar Author'
-        };
+        let postDTO = createPost('AnyTitle', 'AnyContent', 'AnyAuthor');
         return action.execute(postDTO).then(() => {
             sinon.assert.calledWith(createPost, postDTO);
         });
@@ -97,3 +83,12 @@ describe('getLastPosts should', () => {
         });
     });
 });
+
+function createPost(title, content, author, date) {
+    return {
+        title : title,
+        content : content,
+        author : author,
+        date : date
+    };
+}
