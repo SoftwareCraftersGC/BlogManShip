@@ -9,19 +9,41 @@
     <style>
       :host {
         display: block;
+        padding: 0 256px;
       }
 
       header {
           @apply(--layout-horizontal);
-          @apply(--layout-center);
+          @apply(--layout-justified);
       }
+
+      h2 {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 36px;
+        max-width: 80%;
+      }
+
+      p#author {
+        font-style: italic;
+        display: inline-block;
+      }
+
+      p:not(#author) {
+        font-size: 24px;
+      }
+
     </style>
 
     <header>
-        <paper-icon-button icon="icons:arrow-back" on-tap="_back"></paper-icon-button>
         <h2>[[post.title]]</h2>
+        <paper-icon-button icon="icons:clear" on-tap="_back"></paper-icon-button>
     </header>
-    <h4>[[post.author]]</h4>
+    <p id="author">[[post.author]]</p>
+    <a href="#">Tag 1</a>
+    <a href="#">Tag 2</a>
     <marked-element markdown="[[post.content]]">
         <div class="markdown-html"></div>
     </marked-element>
