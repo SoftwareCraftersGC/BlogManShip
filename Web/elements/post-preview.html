@@ -20,6 +20,21 @@
                 --paper-card-header-text: {
                     @apply(--paper-font-title);
                 };
+
+                --paper-card-content: {
+                    display: block;
+                    display: -webkit-box;
+                    font-size: 16px;
+                    line-height: 35px;
+                    height: 350px;
+                    -webkit-line-clamp: 10;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+
+
                 --paper-card-header: {
                     border-bottom: 2px solid var(--paper-grey-300);
                 };
