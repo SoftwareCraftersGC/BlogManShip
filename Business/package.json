@@ -1,6 +1,6 @@
 {
-    "name" : "Business",
-    "dependencies": {
-        "mongodb": "2.1.7"
-    }
+  "name": "Business",
+  "dependencies": {
+    "mongodb": "^2.1.16"
+  }
 }
