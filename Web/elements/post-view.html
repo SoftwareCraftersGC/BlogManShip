@@ -2,6 +2,8 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+<link rel="import" href="../bower_components/paper-styles/shadow.html">
 
 
 <dom-module id="post-view">
@@ -9,7 +11,11 @@
     <style>
       :host {
         display: block;
-        padding: 0 256px;
+        padding: 30px 50px;
+        margin: 50px auto 30px auto;
+        max-width: 800px;
+        background-color: white;
+        @apply(--shadow-elevation-6dp);
       }
 
       header {
@@ -22,17 +28,25 @@
         @apply(--layout-center-justified);
         margin-top: 0;
         margin-bottom: 0;
-        font-size: 36px;
         max-width: 80%;
+        @apply(--paper-font-display1);
+      }
+
+      a {
+          @apply(--paper-font-caption);
       }
 
       p#author {
-        font-style: italic;
         display: inline-block;
+        @apply(--paper-font-subhead);
       }
 
       p:not(#author) {
-        font-size: 24px;
+          font-family: 'Roboto', 'Noto', sans-serif;
+          text-align: justify;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 27px;
       }
 
     </style>
@@ -48,6 +62,20 @@
         <div class="markdown-html"></div>
     </marked-element>
 
+    <div id="disqus_thread"></div>
+    <script>
+
+        (function() {
+            var d = document, s = d.createElement('script');
+
+            s.src = '//craftsmanshipgc.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        
   </template>
   <script>
     Polymer({
