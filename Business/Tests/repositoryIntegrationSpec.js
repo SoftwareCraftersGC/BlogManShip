@@ -6,7 +6,7 @@ let mongo = require('mongodb');
 let MongoRepository = require('../src/infrastructure/mongoRepository');
 
 describe('post repository', () => {
-    const fakeMongoUrl = 'mongodb://localhost:12345/blog';
+    const fakeMongoUrl = 'mongodb://localhost:27017/blog';
     const repository = new MongoRepository(fakeMongoUrl);
 
     afterEach((done) => {
